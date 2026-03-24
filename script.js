@@ -81,4 +81,32 @@ fetch(CSV_URL)
                 mostraLista(filtro);
             });
         });
+
+        // -------------------------
+        // RICERCA PER TITOLO / REGIA / GENERE
+        // -------------------------
+        const searchInput = document.getElementById("search-input");
+
+        if (searchInput) {
+            searchInput.addEventListener("input", () => {
+                const query = searchInput.value.toLowerCase();
+
+                lista.innerHTML = "";
+
+                films
+                    .filter(film =>
+                        film.Titolo.toLowerCase().includes(query) ||
+                        film.Regia.toLowerCase().includes(query) ||
+                        film.Genere.toLowerCase().includes(query)
+                    )
+                    .forEach(film => {
+                        const li = document.createElement("li");
+                        li.textContent = film.Titolo;
+                        li.addEventListener("click", () => {
+                            window.location.href = `film.html?titolo=${film.Titolo}`;
+                        });
+                        lista.appendChild(li);
+                    });
+            });
+        }
     });
