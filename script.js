@@ -61,7 +61,12 @@ fetch(CSV_URL)
                 })
                 .forEach(film => {
                     const li = document.createElement("li");
-                    li.textContent = film.Titolo;
+                    li.innerHTML =
+                        <strong>${film.Titolo}</strong><br>
+                        <span style="font-size:14px; color:#555;">
+                             Uscita: ${film.Uscita} • Box: ${film.Box}
+                        </span>
+                ';
                     li.addEventListener("click", () => {
                         window.location.href = `film.html?titolo=${film.Titolo}`;
                     });
