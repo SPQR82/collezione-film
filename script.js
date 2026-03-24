@@ -1,3 +1,4 @@
+// URL del tuo Google Sheet in formato CSV
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvDWnpCmYlgbTD7v1qwrI1WyPbRt5Kbbg3S0ZAQzVRmpaQMgO2lfYJ7vlfmWy4HnOgSthCtHBVbTIR/pub?gid=1209283805&single=true&output=csv";
 
 fetch(CSV_URL)
@@ -15,6 +16,9 @@ fetch(CSV_URL)
         const params = new URLSearchParams(window.location.search);
         const titoloSelezionato = params.get("titolo");
 
+        // -------------------------
+        // PAGINA FILM
+        --------------------------
         if (titoloSelezionato) {
             const film = films.find(f => f.Titolo === titoloSelezionato);
 
@@ -22,15 +26,15 @@ fetch(CSV_URL)
                 document.getElementById("film-title").textContent = film.Titolo;
 
                 document.getElementById("film-details").innerHTML = `
-                    <img src="img/${film.Copertina}" 
-                         style="width:100%; max-width:300px; border-radius:10px; display:block; margin:20px auto;">
-
                     <p><strong>Regia:</strong> ${film.Regia}</p>
                     <p><strong>Genere:</strong> ${film.Genere}</p>
                     <p><strong>Box:</strong> ${film.Box}</p>
                     <p><strong>Casa Filmografica:</strong> ${film["Casa Filmografica"]}</p>
                     <p><strong>Edizione Video:</strong> ${film["Edizione Video"]}</p>
                     <p><strong>Note:</strong> ${film.Note}</p>
+
+                    <img src="img/${film.Copertina}" 
+                         style="width:100%; max-width:300px; border-radius:10px; display:block; margin:20px auto;">
                 `;
             }
 
@@ -41,14 +45,40 @@ fetch(CSV_URL)
             return;
         }
 
+        // -------------------------
+        // PAGINA INDEX (lista film)
+        --------------------------
         const lista = document.getElementById("film-list");
 
-        films.forEach(film => {
-            const li = document.createElement("li");
-            li.textContent = film.Titolo;
-            li.addEventListener("click", () => {
-                window.location.href = `film.html?titolo=${film.Titolo}`;
+        function mostraLista(filtri = "all") {
+            lista.innerHTML = "";
+
+            films
+                .filter(film => {
+                    if (filtri === "all") return true;
+                    if (filtri === "bluray") return film.Supporto === "Blu-Ray";
+                    if (filtri === "dvd") return film.Supporto === "DVD";
+                })
+                .forEach(film => {
+                    const li = document.createElement("li");
+                    li.textContent = film.Titolo;
+                    li.addEventListener("click", () => {
+                        window.location.href = `film.html?titolo=${film.Titolo}`;
+                    });
+                    lista.appendChild(li);
+                });
+        }
+
+        // Mostra tutti i film all'inizio
+        mostraLista("all");
+
+        // -------------------------
+        // FILTRI MENU
+        --------------------------
+        document.querySelectorAll("#menu button").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const filtro = btn.dataset.filter;
+                mostraLista(filtro);
             });
-            lista.appendChild(li);
         });
     });
