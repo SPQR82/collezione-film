@@ -1,107 +1,57 @@
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvDWnpCmYlgbTD7v1qwrI1WyPbRt5Kbbg3S0ZAQzVRmpaQMgO2lfYJ7vlfmWy4HnOgSthCtHBVbTIR/pub?gid=1209283805&single=true&output=csv";
+// Carica il CSV da Google Sheets
+fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8Yp0p0xQe0l8x0p0p0p0p0p0p0p0p0p0p0p0p0p0p0p0p0p0p0p0/pub?output=csv')
+    .then(response => response.text())
+    .then(data => {
+        const rows = data.split('\n').map(r => r.split(','));
 
-let films = [];
-
-/* --- PARSER CSV UNIVERSALE --- */
-function parseCSV(text) {
-    const rows = text
-        .split(/\r?\n/)
-        .map(r => r.split(/;(?=(?:[^"]*"[^"]*")*[^"]*$)|,(?=(?:[^"]*"[^"]*")*[^"]*$)/));
-
-    const headers = rows[0].map(h => h.trim().replace(/^"|"$/g, ""));
-
-    return rows.slice(1).map(row => {
-        let obj = {};
-        headers.forEach((h, i) => {
-            obj[h] = row[i] ? row[i].trim().replace(/^"|"$/g, "") : "";
+        const headers = rows[0];
+        const films = rows.slice(1).map(row => {
+            let obj = {};
+            headers.forEach((h, i) => obj[h.trim()] = row[i] ? row[i].trim() : "");
+            return obj;
         });
-        return obj;
-    });
-}
 
-/* --- CARICA CSV --- */
-async function loadCSV() {
-    const response = await fetch(CSV_URL);
-    const text = await response.text();
-    films = parseCSV(text);
-}
+        // Controlla se siamo nella pagina film.html
+        const params = new URLSearchParams(window.location.search);
+        const titoloSelezionato = params.get("titolo");
 
-/* --- LISTA FILM --- */
-async function initListPage() {
-    await loadCSV();
+        if (titoloSelezionato) {
+            // Siamo nella scheda film
+            const film = films.find(f => f.Titolo === titoloSelezionato);
 
-    const list = document.getElementById("film-list");
-    const search = document.getElementById("search");
-    const buttons = document.querySelectorAll(".filter-btn");
+            if (film) {
+                document.getElementById("film-title").textContent = film.Titolo;
 
-    let currentFilter = "Tutti";
+                // Inserisce copertina + dettagli nello spazio grigio
+                document.getElementById("film-details").innerHTML = `
+                    <img src="img/${film.Copertina}" 
+                         style="width:100%; max-width:300px; border-radius:10px; display:block; margin:20px auto;">
 
-    function render() {
-        const query = search.value.toLowerCase();
-        list.innerHTML = "";
+                    <p><strong>Regia:</strong> ${film.Regia}</p>
+                    <p><strong>Genere:</strong> ${film.Genere}</p>
+                    <p><strong>Box:</strong> ${film.Box}</p>
+                    <p><strong>Casa Filmografica:</strong> ${film["Casa Filmografica"]}</p>
+                    <p><strong>Edizione Video:</strong> ${film["Edizione Video"]}</p>
+                    <p><strong>Note:</strong> ${film.Note}</p>
+                `;
+            }
 
-        films
-            .filter(f =>
-    f.Titolo.toLowerCase().includes(query) ||
-    f.Regia.toLowerCase().includes(query) ||
-
-    // Ricerca GENERE intelligente
-    f.Genere.toLowerCase() === query ||
-    f.Genere.toLowerCase().split(/[\s,\/]+/).includes(query) ||
-
-    f.Box.toLowerCase().includes(query) ||
-    f["Casa Filmografica"].toLowerCase().includes(query) ||
-    f["Edizione Video"].toLowerCase().includes(query) ||
-    f.Note.toLowerCase().includes(query)
-)
-            .forEach(f => {
-                const li = document.createElement("li");
-                li.innerHTML = `<a href="film.html?id=${f.ID}&from=${currentFilter}">${f.Titolo}</a>`;
-                list.appendChild(li);
+            // Pulsante "Torna indietro"
+            document.getElementById("back-btn").addEventListener("click", () => {
+                window.location.href = "index.html";
             });
-    }
 
-    search.addEventListener("input", render);
+        } else {
+            // Siamo nella pagina index.html → lista film
+            const lista = document.getElementById("film-list");
 
-    buttons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            currentFilter = btn.dataset.format;
-            render();
-        });
+            films.forEach(film => {
+                const li = document.createElement("li");
+                li.textContent = film.Titolo;
+                li.addEventListener("click", () => {
+                    window.location.href = `film.html?titolo=${film.Titolo}`;
+                });
+                lista.appendChild(li);
+            });
+        }
     });
-
-    render();
-}
-
-/* --- PAGINA DETTAGLI FILM --- */
-async function initFilmPage() {
-    await loadCSV();
-
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
-    const from = params.get("from") || "Tutti";
-
-    const film = films.find(f => f.ID === id);
-
-    document.getElementById("film-title").textContent = film.Titolo;
-
-    const details = document.getElementById("film-details");
-    details.innerHTML = `
-        <p><strong>Formato:</strong> ${film.Formato}</p>
-        <p><strong>Regia:</strong> ${film.Regia}</p>
-        <p><strong>Casa Filmografica:</strong> ${film["Casa Filmografica"]}</p>
-        <p><strong>Uscita:</strong> ${film.Uscita}</p>
-        <p><strong>Genere:</strong> ${film.Genere}</p>
-        <p><strong>Box:</strong> ${film.Box}</p>
-        <p><strong>Edizione Video:</strong> ${film["Edizione Video"]}</p>
-        <p><strong>Note:</strong> ${film.Note}</p>
-    `;
-
-    document.getElementById("back-btn").addEventListener("click", () => {
-        window.location.href = `index.html#${from}`;
-    });
-}
-
-/* --- AVVIO --- */
-if (document.getElementById("film-list")) initListPage();
-if (document.getElementById("film-details")) initFilmPage();
