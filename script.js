@@ -41,16 +41,19 @@ async function initListPage() {
         list.innerHTML = "";
 
         films
-            .filter(f => currentFilter === "Tutti" || f.Formato === currentFilter)
             .filter(f =>
-                f.Titolo.toLowerCase().includes(query) ||
-                f.Regia.toLowerCase().includes(query) ||
-                f.Genere.toLowerCase().split(/[\s,\/]+/).includes(query) ||
-                f.Box.toLowerCase().includes(query) ||
-                f["Casa Filmografica"].toLowerCase().includes(query) ||
-                f["Edizione Video"].toLowerCase().includes(query) ||
-                f.Note.toLowerCase().includes(query)
-            )
+    f.Titolo.toLowerCase().includes(query) ||
+    f.Regia.toLowerCase().includes(query) ||
+
+    // Ricerca GENERE intelligente
+    f.Genere.toLowerCase() === query ||
+    f.Genere.toLowerCase().split(/[\s,\/]+/).includes(query) ||
+
+    f.Box.toLowerCase().includes(query) ||
+    f["Casa Filmografica"].toLowerCase().includes(query) ||
+    f["Edizione Video"].toLowerCase().includes(query) ||
+    f.Note.toLowerCase().includes(query)
+)
             .forEach(f => {
                 const li = document.createElement("li");
                 li.innerHTML = `<a href="film.html?id=${f.ID}&from=${currentFilter}">${f.Titolo}</a>`;
