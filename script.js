@@ -38,8 +38,7 @@ async function initListPage() {
                 f.Genere.toLowerCase().includes(query) ||
                 f.Box.toLowerCase().includes(query) ||
                 f["Casa Filmografica"].toLowerCase().includes(query) ||
-                f["Edizione Video"].toLowerCase().includes(query) ||
-                f.Note.toLowerCase().includes(query)
+                f["Edizione Video Note"].toLowerCase().includes(query)
             )
             .forEach(f => {
                 const li = document.createElement("li");
@@ -80,8 +79,7 @@ async function initFilmPage() {
         <p><strong>Uscita:</strong> ${film.Uscita}</p>
         <p><strong>Genere:</strong> ${film.Genere}</p>
         <p><strong>Box:</strong> ${film.Box}</p>
-        <p><strong>Edizione Video:</strong> ${film["Edizione Video"]}</p>
-        <p><strong>Note:</strong> ${film.Note}</p>
+        <p><strong>Edizione Video / Note:</strong> ${film["Edizione Video Note"]}</p>
     `;
 
     document.getElementById("back-btn").addEventListener("click", () => {
