@@ -45,7 +45,7 @@ async function initListPage() {
             .filter(f =>
                 f.Titolo.toLowerCase().includes(query) ||
                 f.Regia.toLowerCase().includes(query) ||
-                f.Genere.toLowerCase().includes(query) ||
+                f.Genere.toLowerCase().split(/[\s,\/]+/).includes(query) ||
                 f.Box.toLowerCase().includes(query) ||
                 f["Casa Filmografica"].toLowerCase().includes(query) ||
                 f["Edizione Video"].toLowerCase().includes(query) ||
