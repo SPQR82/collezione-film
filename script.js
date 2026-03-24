@@ -78,7 +78,7 @@ fetch(CSV_URL)
                     li.innerHTML = `
                         <strong>${film.Titolo}</strong><br>
                         <span style="font-size:14px; color:#555;">
-                            Uscita: ${film.Uscita} • Box: ${film.Box}
+                            Formato: ${film.Formato} • Box: ${film.Box}
                         </span>
                     `;
                     li.addEventListener("click", () => {
