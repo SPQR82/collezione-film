@@ -1,3 +1,4 @@
+// URL del tuo Google Sheet in formato CSV
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvDWnpCmYlgbTD7v1qwrI1WyPbRt5Kbbg3S0ZAQzVRmpaQMgO2lfYJ7vlfmWy4HnOgSthCtHBVbTIR/pub?gid=1209283805&single=true&output=csv";
 
 fetch(CSV_URL)
@@ -17,7 +18,7 @@ fetch(CSV_URL)
 
         // -------------------------
         // PAGINA FILM
-        --------------------------
+        // -------------------------
         if (titoloSelezionato) {
             const film = films.find(f => f.Titolo === titoloSelezionato);
 
@@ -46,17 +47,17 @@ fetch(CSV_URL)
 
         // -------------------------
         // PAGINA INDEX (lista film)
-        --------------------------
+        // -------------------------
         const lista = document.getElementById("film-list");
 
-        function mostraLista(filtri = "all") {
+        function mostraLista(filtro = "all") {
             lista.innerHTML = "";
 
             films
                 .filter(film => {
-                    if (filtri === "all") return true;
-                    if (filtri === "bluray") return film.Supporto === "Blu-Ray";
-                    if (filtri === "dvd") return film.Supporto === "DVD";
+                    if (filtro === "all") return true;
+                    if (filtro === "bluray") return film.Formato === "Blu-Ray";
+                    if (filtro === "dvd") return film.Formato === "DVD";
                 })
                 .forEach(film => {
                     const li = document.createElement("li");
@@ -73,7 +74,7 @@ fetch(CSV_URL)
 
         // -------------------------
         // FILTRI MENU
-        --------------------------
+        // -------------------------
         document.querySelectorAll("#menu button").forEach(btn => {
             btn.addEventListener("click", () => {
                 const filtro = btn.dataset.filter;
