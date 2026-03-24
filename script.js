@@ -1,28 +1,30 @@
-// Carica il CSV da Google Sheets
-fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8Yp0p0xQe0l8x0p0p0p0p0p0p0p0p0p0p0p0p0p0p0p0p0p0p0p0/pub?output=csv')
+// URL del tuo Google Sheet in formato CSV
+const CSV_URL = "QUI_METTI_IL_TUO_LINK_CSV";
+
+fetch(CSV_URL)
     .then(response => response.text())
     .then(data => {
-        const rows = data.split('\n').map(r => r.split(','));
+        const rows = data.split("\n").map(r => r.split(","));
 
-        const headers = rows[0];
+        const headers = rows[0].map(h => h.trim());
         const films = rows.slice(1).map(row => {
             let obj = {};
-            headers.forEach((h, i) => obj[h.trim()] = row[i] ? row[i].trim() : "");
+            headers.forEach((h, i) => obj[h] = row[i] ? row[i].trim() : "");
             return obj;
         });
 
-        // Controlla se siamo nella pagina film.html
         const params = new URLSearchParams(window.location.search);
         const titoloSelezionato = params.get("titolo");
 
+        // -------------------------
+        // PAGINA FILM
+        // -------------------------
         if (titoloSelezionato) {
-            // Siamo nella scheda film
             const film = films.find(f => f.Titolo === titoloSelezionato);
 
             if (film) {
                 document.getElementById("film-title").textContent = film.Titolo;
 
-                // Inserisce copertina + dettagli nello spazio grigio
                 document.getElementById("film-details").innerHTML = `
                     <img src="img/${film.Copertina}" 
                          style="width:100%; max-width:300px; border-radius:10px; display:block; margin:20px auto;">
@@ -36,22 +38,24 @@ fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8Yp0p0xQe0l8x0p0p0p0p0p
                 `;
             }
 
-            // Pulsante "Torna indietro"
             document.getElementById("back-btn").addEventListener("click", () => {
                 window.location.href = "index.html";
             });
 
-        } else {
-            // Siamo nella pagina index.html → lista film
-            const lista = document.getElementById("film-list");
-
-            films.forEach(film => {
-                const li = document.createElement("li");
-                li.textContent = film.Titolo;
-                li.addEventListener("click", () => {
-                    window.location.href = `film.html?titolo=${film.Titolo}`;
-                });
-                lista.appendChild(li);
-            });
+            return;
         }
+
+        // -------------------------
+        // PAGINA INDEX
+        // -------------------------
+        const lista = document.getElementById("film-list");
+
+        films.forEach(film => {
+            const li = document.createElement("li");
+            li.textContent = film.Titolo;
+            li.addEventListener("click", () => {
+                window.location.href = `film.html?titolo=${film.Titolo}`;
+            });
+            lista.appendChild(li);
+        });
     });
