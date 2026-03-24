@@ -1,14 +1,17 @@
+/* ====== STILE GENERALE ====== */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     background: #f2f2f2;
 }
 
+/* ====== HEADER ====== */
 header {
     background: #333;
     color: white;
     padding: 15px;
     text-align: center;
+    position: relative;
 }
 
 #back-btn {
@@ -20,10 +23,57 @@ header {
     color: white;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
 }
 
+/* ====== MENU FILTRI ====== */
+#menu {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background: #ddd;
+    padding: 10px;
+}
+
+#menu button {
+    padding: 10px 15px;
+    border: none;
+    background: #444;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#menu button:hover {
+    background: #666;
+}
+
+/* ====== BARRA DI RICERCA ====== */
+#search-box {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    background: #eee;
+}
+
+#search-input {
+    width: 90%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+/* ====== LISTA FILM ====== */
 main {
     padding: 20px;
+}
+
+#film-list {
+    padding: 0;
+    margin: 0;
 }
 
 #film-list li {
@@ -33,10 +83,26 @@ main {
     border-radius: 8px;
     cursor: pointer;
     list-style: none;
+    font-size: 16px;
+    border: 1px solid #ccc;
 }
 
+#film-list li:hover {
+    background: #e8e8e8;
+}
+
+/* ====== SCHEDA FILM ====== */
 #film-details {
     background: #ddd;
     padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+#film-details img {
+    display: block;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 300px;
     border-radius: 10px;
 }
