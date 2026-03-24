@@ -49,24 +49,38 @@ fetch(CSV_URL)
         // PAGINA INDEX (lista film)
         // -------------------------
         const lista = document.getElementById("film-list");
+        const searchInput = document.getElementById("search-input");
 
-        function mostraLista(filtro = "all") {
+        let filtroAttivo = "all";   // all / bluray / dvd
+        let ricercaAttiva = "";     // testo della ricerca
+
+        function aggiornaLista() {
             lista.innerHTML = "";
 
             films
                 .filter(film => {
-                    if (filtro === "all") return true;
-                    if (filtro === "bluray") return film.Formato === "Blu-Ray";
-                    if (filtro === "dvd") return film.Formato === "DVD";
+                    // FILTRO FORMATO
+                    if (filtroAttivo === "bluray" && film.Formato !== "Blu-Ray") return false;
+                    if (filtroAttivo === "dvd" && film.Formato !== "DVD") return false;
+
+                    // FILTRO RICERCA
+                    const q = ricercaAttiva.toLowerCase();
+                    if (!film.Titolo.toLowerCase().includes(q) &&
+                        !film.Regia.toLowerCase().includes(q) &&
+                        !film.Genere.toLowerCase().includes(q)) {
+                        return false;
+                    }
+
+                    return true;
                 })
                 .forEach(film => {
                     const li = document.createElement("li");
-                    li.innerHTML =
+                    li.innerHTML = `
                         <strong>${film.Titolo}</strong><br>
                         <span style="font-size:14px; color:#555;">
-                             Uscita: ${film.Uscita} • Box: ${film.Box}
+                            Uscita: ${film.Uscita} • Box: ${film.Box}
                         </span>
-                ';
+                    `;
                     li.addEventListener("click", () => {
                         window.location.href = `film.html?titolo=${film.Titolo}`;
                     });
@@ -75,43 +89,25 @@ fetch(CSV_URL)
         }
 
         // Mostra tutti i film all'inizio
-        mostraLista("all");
+        aggiornaLista();
 
         // -------------------------
         // FILTRI MENU
         // -------------------------
         document.querySelectorAll("#menu button").forEach(btn => {
             btn.addEventListener("click", () => {
-                const filtro = btn.dataset.filter;
-                mostraLista(filtro);
+                filtroAttivo = btn.dataset.filter;
+                aggiornaLista();
             });
         });
 
         // -------------------------
-        // RICERCA PER TITOLO / REGIA / GENERE
+        // RICERCA
         // -------------------------
-        const searchInput = document.getElementById("search-input");
-
         if (searchInput) {
             searchInput.addEventListener("input", () => {
-                const query = searchInput.value.toLowerCase();
-
-                lista.innerHTML = "";
-
-                films
-                    .filter(film =>
-                        film.Titolo.toLowerCase().includes(query) ||
-                        film.Regia.toLowerCase().includes(query) ||
-                        film.Genere.toLowerCase().includes(query)
-                    )
-                    .forEach(film => {
-                        const li = document.createElement("li");
-                        li.textContent = film.Titolo;
-                        li.addEventListener("click", () => {
-                            window.location.href = `film.html?titolo=${film.Titolo}`;
-                        });
-                        lista.appendChild(li);
-                    });
+                ricercaAttiva = searchInput.value;
+                aggiornaLista();
             });
         }
     });
