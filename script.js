@@ -2,18 +2,25 @@ const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvDWnpCmYlgbTD
 
 let films = [];
 
+/* --- PARSER CSV ROBUSTO --- */
+function parseCSV(text) {
+    const rows = text.split(/\r?\n/).map(r => r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/));
+    const headers = rows[0].map(h => h.trim().replace(/^"|"$/g, ""));
+    
+    return rows.slice(1).map(row => {
+        let obj = {};
+        headers.forEach((h, i) => {
+            obj[h] = row[i] ? row[i].trim().replace(/^"|"$/g, "") : "";
+        });
+        return obj;
+    });
+}
+
 /* --- CARICA CSV --- */
 async function loadCSV() {
     const response = await fetch(CSV_URL);
     const text = await response.text();
-    const rows = text.split("\n").map(r => r.split(","));
-
-    const headers = rows[0];
-    films = rows.slice(1).map(row => {
-        let obj = {};
-        headers.forEach((h, i) => obj[h.trim()] = row[i] ? row[i].trim() : "");
-        return obj;
-    });
+    films = parseCSV(text);
 }
 
 /* --- LISTA FILM --- */
