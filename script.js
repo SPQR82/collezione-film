@@ -27,6 +27,7 @@ fetch(CSV_URL)
 
                 document.getElementById("film-details").innerHTML = `
                     <p><strong>Regia:</strong> ${film.Regia}</p>
+                    <p><strong>Uscita:</strong> ${film.Uscita}</p>
                     <p><strong>Genere:</strong> ${film.Genere}</p>
                     <p><strong>Formato:</strong> ${film.Formato}</p>
                     <p><strong>Box:</strong> ${film.Box}</p>
