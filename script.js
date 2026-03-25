@@ -38,6 +38,11 @@ fetch(CSV_URL)
                     <img src="img/${film.Copertina}" 
                          style="width:100%; max-width:300px; border-radius:10px; display:block; margin:20px auto;">
                 `;
+
+                // --- Assegna la classe in base al genere ---
+                let genere = film.Genere;
+                let classeGenere = genere.toLowerCase().replace(/\s+/g, "");
+                document.getElementById("film-details").classList.add(classeGenere);
             }
 
             document.getElementById("back-btn").addEventListener("click", () => {
