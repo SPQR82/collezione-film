@@ -314,19 +314,17 @@ main {
     color: #8b4513;
 }
 
-/* ====== TITOLO FILM – EFFETTO PROIETTORE ====== */
+/* ====== TITOLO FILM – PULITO E CINEMATOGRAFICO ====== */
 #film-title {
-    background: #000;                     /* Sfondo nero totale */
-    color: #fff;                          /* Testo bianco */
-    padding: 15px 20px;
+    display: block;
+    background: #000;        /* Sfondo nero pieno */
+    color: #fff;             /* Testo bianco */
+    padding: 20px 30px;
     text-align: center;
-    font-size: 28px;
-    font-weight: bold;
-    border-radius: 8px;
-    margin: 20px auto;
-    width: fit-content;
-    box-shadow: 0 0 15px rgba(255,255,255,0.6); /* Glow da proiettore */
-    text-shadow: 0 0 10px rgba(255,255,255,0.8),
-                 0 0 20px rgba(255,255,255,0.6),
-                 0 0 30px rgba(255,255,255,0.4); /* Luce diffusa */
+    font-size: 40px;         /* Bello grande */
+    font-weight: 700;
+    margin: 20px auto 10px;  /* Nessuna striscia grigia */
+    width: fit-content;      /* Si adatta al testo */
+    border-radius: 6px;
+    letter-spacing: 1px;
 }
