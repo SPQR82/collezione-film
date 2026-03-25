@@ -106,3 +106,17 @@ main {
     max-width: 300px;
     border-radius: 10px;
 }
+
+/* Effetto poster sulla copertina */
+#film-details img {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Ombra profonda stile locandina */
+    border: 3px solid #222;                     /* Bordo scuro da poster */
+    transition: transform 0.3s ease, 
+                box-shadow 0.3s ease;           /* Animazione morbida */
+}
+
+#film-details img:hover {
+    transform: scale(1.03);                     /* Leggero zoom al passaggio */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55); /* Ombra più intensa */
+}
+
