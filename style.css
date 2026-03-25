@@ -99,31 +99,6 @@ main {
     margin: 20px;
 }
 
-/* ====== CARTELLO DI PRODUZIONE (versione neutra) ====== */
-#film-details {
-    background: #1a1a1a;                  /* Nero tecnico, non troppo duro */
-    color: #e6e6e6;                       /* Testo chiaro e morbido */
-    border: 3px solid #ccc;               /* Bordo chiaro stile nastro da set */
-    padding: 25px;
-    border-radius: 6px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.5); /* Effetto pannello illuminato */
-    font-family: "Courier New", monospace; /* Macchina da scrivere */
-}
-
-/* Titoli delle voci (Regia:, Genere:, ecc.) */
-#film-details strong {
-    color: #f0f0f0;                       /* Bianco tecnico */
-    text-transform: uppercase;            /* Look da scheda di produzione */
-    letter-spacing: 1px;
-}
-
-/* Spaziatura e linee tecniche */
-#film-details p {
-    margin: 8px 0;
-    border-bottom: 1px dashed #555;       /* Linea tratteggiata da foglio tecnico */
-    padding-bottom: 6px;
-}
-
 #film-details img {
     display: block;
     margin: 20px auto;
