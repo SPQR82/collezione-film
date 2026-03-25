@@ -23,7 +23,6 @@ fetch(CSV_URL)
             const film = films.find(f => f.Titolo === titoloSelezionato);
 
             if (film) {
-             document.getElementById("film-title").textContent = film.Titolo;
 
                 document.getElementById("film-details").innerHTML = `
                     <p><strong>Titolo:</strong> ${film.Titolo}</p>
