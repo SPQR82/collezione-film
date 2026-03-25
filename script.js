@@ -23,22 +23,22 @@ fetch(CSV_URL)
             const film = films.find(f => f.Titolo === titoloSelezionato);
 
             if (film) {
-               document.getElementById("film-details").innerHTML = `
-    <h1 class="titolo-film">${film.Titolo}</h1>
+             document.getElementById("film-title").textContent = film.Titolo;
 
-    <p><strong>Regia:</strong> ${film.Regia}</p>
-    <p><strong>Uscita:</strong> ${film.Uscita}</p>
-    <p><strong>Genere:</strong> ${film.Genere}</p>
-    <p><strong>Formato:</strong> ${film.Formato}</p>
-    <p><strong>Box:</strong> ${film.Box}</p>
-    <p><strong>Casa Filmografica:</strong> ${film["Casa Filmografica"]}</p>
-    <p><strong>Edizione Video:</strong> ${film["Edizione Video"]}</p>
-    <p><strong>Note:</strong> ${film.Note}</p>
+                document.getElementById("film-details").innerHTML = `
+                    <p><strong>Titolo:</strong> ${film.Titolo}</p>
+                    <p><strong>Regia:</strong> ${film.Regia}</p>
+                    <p><strong>Uscita:</strong> ${film.Uscita}</p>
+                    <p><strong>Genere:</strong> ${film.Genere}</p>
+                    <p><strong>Formato:</strong> ${film.Formato}</p>
+                    <p><strong>Box:</strong> ${film.Box}</p>
+                    <p><strong>Casa Filmografica:</strong> ${film["Casa Filmografica"]}</p>
+                    <p><strong>Edizione Video:</strong> ${film["Edizione Video"]}</p>
+                    <p><strong>Note:</strong> ${film.Note}</p>
 
-    <img src="img/${film.Copertina}" 
-         style="width:100%; max-width:300px; border-radius:10px; display:block; margin:20px auto;">
-`;
-
+                    <img src="img/${film.Copertina}" 
+                         style="width:100%; max-width:300px; border-radius:10px; display:block; margin:20px auto;">
+                `;
 
                 // --- Assegna la classe in base al genere ---
                 let genere = film.Genere;
