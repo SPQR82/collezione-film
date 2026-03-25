@@ -314,17 +314,27 @@ main {
     color: #8b4513;
 }
 
-/* ====== TITOLO FILM – PULITO E CINEMATOGRAFICO ====== */
+/* ====== TITOLO FILM – EFFETTO PROIETTORE ELEGANTE ====== */
 #film-title {
     display: block;
-    background: #000;        /* Sfondo nero pieno */
-    color: #fff;             /* Testo bianco */
-    padding: 20px 30px;
+    background: #000;                 /* Sfondo nero pieno */
+    color: #fff;                      /* Testo bianco */
+    padding: 22px 35px;
     text-align: center;
-    font-size: 40px;         /* Bello grande */
+    font-size: 42px;                  /* Bello grande */
     font-weight: 700;
-    margin: 20px auto 10px;  /* Nessuna striscia grigia */
-    width: fit-content;      /* Si adatta al testo */
+    margin: 20px auto 15px;
+    width: fit-content;
     border-radius: 6px;
     letter-spacing: 1px;
+
+    /* Effetto proiettore morbido */
+    text-shadow: 
+        0 0 8px rgba(255,255,255,0.6),
+        0 0 15px rgba(255,255,255,0.4);
+
+    /* Leggero alone intorno al blocco */
+    box-shadow: 
+        0 0 12px rgba(255,255,255,0.15),
+        0 0 25px rgba(255,255,255,0.08);
 }
