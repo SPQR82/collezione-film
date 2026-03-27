@@ -5,10 +5,10 @@ const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvDWnpCmYlgbTD
 function normalizza(testo) {
     return testo
         .toLowerCase()
-        .normalize("NFD")               // separa accenti
-        .replace(/[\u0300-\u036f]/g, "") // rimuove accenti
-        .replace(/['’]/g, "")            // rimuove apostrofi
-        .replace(/\s+/g, " ")            // spazi multipli → singolo
+        .normalize("NFD")               
+        .replace(/[\u0300-\u036f]/g, "") 
+        .replace(/['’]/g, "")            
+        .replace(/\s+/g, " ")            
         .trim();
 }
 
@@ -69,7 +69,6 @@ fetch(CSV_URL)
                 let classeGenere = normalizza(genere).replace(/\s+/g, "");
                 document.getElementById("film-details").classList.add(classeGenere);
 
-                // Mostra la scheda solo quando è pronta
                 document.getElementById("film-details").style.display = "block";
             }
 
@@ -86,8 +85,8 @@ fetch(CSV_URL)
         const lista = document.getElementById("film-list");
         const searchInput = document.getElementById("search-input");
 
-        let filtroAttivo = "all";   // all / bluray / dvd
-        let ricercaAttiva = "";     // testo della ricerca
+        let filtroAttivo = "all";   
+        let ricercaAttiva = "";     
 
         function aggiornaLista() {
             lista.innerHTML = "";
@@ -114,12 +113,14 @@ fetch(CSV_URL)
                         film.Note
                     );
 
-                    // tutte le parole devono essere presenti
                     return parole.every(p => campi.includes(p));
                 })
                 .forEach(film => {
 
                     const li = document.createElement("li");
+
+                    // 👉 AGGIUNGIAMO LA CLASSE DEL GENERE
+                    li.classList.add(normalizza(film.Genere).replace(/\s+/g, ""));
 
                     // Evidenziazione del titolo
                     const titoloEvidenziato = evidenzia(film.Titolo, ricercaAttiva);
@@ -139,7 +140,6 @@ fetch(CSV_URL)
                 });
         }
 
-        // Mostra tutti i film all'inizio
         aggiornaLista();
 
         // -------------------------
