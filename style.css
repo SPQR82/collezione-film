@@ -417,3 +417,11 @@ main {
     border-color: #c0392b;
     outline: none;
 }
+
+/* Disabilita la selezione del testo nei film su mobile */
+#film-list li {
+    -webkit-user-select: none; /* Safari / Chrome mobile */
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
