@@ -43,6 +43,9 @@ fetch(CSV_URL)
                 let genere = film.Genere;
                 let classeGenere = genere.toLowerCase().replace(/\s+/g, "");
                 document.getElementById("film-details").classList.add(classeGenere);
+
+                // --- MOSTRA LA SCHEDA SOLO ORA (FIX QUADRATINO NERO) ---
+                document.getElementById("film-details").style.display = "block";
             }
 
             document.getElementById("back-btn").addEventListener("click", () => {
