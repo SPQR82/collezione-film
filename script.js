@@ -1,6 +1,31 @@
 // URL del tuo Google Sheet in formato CSV
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvDWnpCmYlgbTD7v1qwrI1WyPbRt5Kbbg3S0ZAQzVRmpaQMgO2lfYJ7vlfmWy4HnOgSthCtHBVbTIR/pub?gid=1209283805&single=true&output=csv";
 
+// Funzione per normalizzare il testo (rende la ricerca più intelligente)
+function normalizza(testo) {
+    return testo
+        .toLowerCase()
+        .normalize("NFD")               // separa accenti
+        .replace(/[\u0300-\u036f]/g, "") // rimuove accenti
+        .replace(/['’]/g, "")            // rimuove apostrofi
+        .replace(/\s+/g, " ")            // spazi multipli → singolo
+        .trim();
+}
+
+// Evidenziazione del testo trovato
+function evidenzia(testo, query) {
+    if (!query) return testo;
+
+    let parole = query.split(" ").filter(p => p.length > 1);
+
+    parole.forEach(parola => {
+        let regex = new RegExp(`(${parola})`, "gi");
+        testo = testo.replace(regex, "<mark>$1</mark>");
+    });
+
+    return testo;
+}
+
 fetch(CSV_URL)
     .then(response => response.text())
     .then(data => {
@@ -41,10 +66,10 @@ fetch(CSV_URL)
 
                 // --- Assegna la classe in base al genere ---
                 let genere = film.Genere;
-                let classeGenere = genere.toLowerCase().replace(/\s+/g, "");
+                let classeGenere = normalizza(genere).replace(/\s+/g, "");
                 document.getElementById("film-details").classList.add(classeGenere);
 
-                // --- MOSTRA LA SCHEDA SOLO ORA (FIX QUADRATINO NERO) ---
+                // Mostra la scheda solo quando è pronta
                 document.getElementById("film-details").style.display = "block";
             }
 
@@ -67,33 +92,49 @@ fetch(CSV_URL)
         function aggiornaLista() {
             lista.innerHTML = "";
 
+            const query = normalizza(ricercaAttiva);
+            const parole = query.split(" ").filter(p => p.length > 0);
+
             films
                 .filter(film => {
+
                     // FILTRO FORMATO
                     if (filtroAttivo === "bluray" && film.Formato !== "Blu-Ray") return false;
                     if (filtroAttivo === "dvd" && film.Formato !== "DVD") return false;
 
-                    // FILTRO RICERCA
-                    const q = ricercaAttiva.toLowerCase();
-                    if (!film.Titolo.toLowerCase().includes(q) &&
-                        !film.Regia.toLowerCase().includes(q) &&
-                        !film.Genere.toLowerCase().includes(q)) {
-                        return false;
-                    }
+                    // --- RICERCA INTELLIGENTE ---
+                    const campi = normalizza(
+                        film.Titolo + " " +
+                        film.Regia + " " +
+                        film.Genere + " " +
+                        film.Formato + " " +
+                        film.Box + " " +
+                        film["Casa Filmografica"] + " " +
+                        film["Edizione Video"] + " " +
+                        film.Note
+                    );
 
-                    return true;
+                    // tutte le parole devono essere presenti
+                    return parole.every(p => campi.includes(p));
                 })
                 .forEach(film => {
+
                     const li = document.createElement("li");
+
+                    // Evidenziazione del titolo
+                    const titoloEvidenziato = evidenzia(film.Titolo, ricercaAttiva);
+
                     li.innerHTML = `
-                        <strong>${film.Titolo}</strong><br>
+                        <strong>${titoloEvidenziato}</strong><br>
                         <span style="font-size:14px; color:#555;">
                             Formato: ${film.Formato} • Box: ${film.Box}
                         </span>
                     `;
+
                     li.addEventListener("click", () => {
                         window.location.href = `film.html?titolo=${film.Titolo}`;
                     });
+
                     lista.appendChild(li);
                 });
         }
