@@ -255,3 +255,99 @@ main {
 
 #film-details.western { border-color: #8b4513; }
 #film-details.western strong { color: #8b4513; }
+
+/* ====== COLORI DELLA STRISCIA LATERALE IN BASE AL GENERE ====== */
+
+#film-list li.animazione {
+    border-left-color: #fff799;
+    border-right-color: #fff799;
+}
+
+#film-list li.avventura {
+    border-left-color: #0b6623;
+    border-right-color: #0b6623;
+}
+
+#film-list li.azione {
+    border-left-color: #ff8c00;
+    border-right-color: #ff8c00;
+}
+
+#film-list li.commedia {
+    border-left-color: #e6c300;
+    border-right-color: #e6c300;
+}
+
+#film-list li.concerto,
+#film-list li.corse,
+#film-list li.corsodilingua,
+#film-list li.eventi {
+    border-left-color: #ffffff;
+    border-right-color: #ffffff;
+}
+
+#film-list li.documentario {
+    border-left-color: #ff66cc;
+    border-right-color: #ff66cc;
+}
+
+#film-list li.drammatico {
+    border-left-color: #800080;
+    border-right-color: #800080;
+}
+
+#film-list li.erotico {
+    border-left-color: #ff0000;
+    border-right-color: #ff0000;
+}
+
+#film-list li.fantascienza {
+    border-left-color: #0047ab;
+    border-right-color: #0047ab;
+}
+
+#film-list li.fantastico {
+    border-left-color: #00aaff;
+    border-right-color: #00aaff;
+}
+
+#film-list li.fiabe {
+    border-left-color: #fff799;
+    border-right-color: #fff799;
+}
+
+#film-list li.guerra {
+    border-left-color: #808080;
+    border-right-color: #808080;
+}
+
+#film-list li.horror {
+    border-left-color: #c0392b;
+    border-right-color: #c0392b;
+}
+
+#film-list li.musical {
+    border-left-color: #ff8c00;
+    border-right-color: #ff8c00;
+}
+
+#film-list li.ragazzi {
+    border-left-color: #7fff7f;
+    border-right-color: #7fff7f;
+}
+
+#film-list li.sport {
+    border-left-color: #ffb347;
+    border-right-color: #ffb347;
+}
+
+#film-list li.thriller {
+    border-left-color: #ff6666;
+    border-right-color: #ff6666;
+}
+
+#film-list li.western {
+    border-left-color: #8b4513;
+    border-right-color: #8b4513;
+}
+
