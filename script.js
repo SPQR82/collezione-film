@@ -115,29 +115,32 @@ fetch(CSV_URL)
 
                     return parole.every(p => campi.includes(p));
                 })
-                .forEach(film => {
+          .forEach(film => {
 
-                    const li = document.createElement("li");
+    const li = document.createElement("li");
 
-                    // 👉 AGGIUNGIAMO LA CLASSE DEL GENERE
-                    li.classList.add(normalizza(film.Genere).replace(/\s+/g, ""));
+    // 👉 Aggiungiamo la classe del genere SOLO se esiste
+    if (film.Genere && film.Genere.trim() !== "") {
+        const classeGenere = normalizza(film.Genere).replace(/\s+/g, "");
+        li.classList.add(classeGenere);
+    }
 
-                    // Evidenziazione del titolo
-                    const titoloEvidenziato = evidenzia(film.Titolo, ricercaAttiva);
+    // Evidenziazione del titolo
+    const titoloEvidenziato = evidenzia(film.Titolo, ricercaAttiva);
 
-                    li.innerHTML = `
-                        <strong>${titoloEvidenziato}</strong><br>
-                        <span style="font-size:14px; color:#555;">
-                            Formato: ${film.Formato} • Box: ${film.Box}
-                        </span>
-                    `;
+    li.innerHTML = `
+        <strong>${titoloEvidenziato}</strong><br>
+        <span style="font-size:14px; color:#555;">
+            Formato: ${film.Formato} • Box: ${film.Box}
+        </span>
+    `;
 
-                    li.addEventListener("click", () => {
-                        window.location.href = `film.html?titolo=${film.Titolo}`;
-                    });
+    li.addEventListener("click", () => {
+        window.location.href = `film.html?titolo=${film.Titolo}`;
+    });
 
-                    lista.appendChild(li);
-                });
+    lista.appendChild(li);
+});
         }
 
         aggiornaLista();
