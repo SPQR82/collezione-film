@@ -88,34 +88,34 @@ main {
 }
 
 /* ====== SCHEDA FILM ====== */
+
+/* FIX: nascondo la scheda finché non è caricata */
 #film-details {
-    background: #ddd;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px;
+    display: none;
 }
-/* ====== CARTELLO DI PRODUZIONE ====== */
+
 #film-details {
-    background: #111;                     /* Sfondo scuro da set */
-    color: #f5f5f5;                       /* Testo chiaro */
-    border: 3px solid #c0392b;            /* Bordo rosso da backstage */
+    background: #111;                     
+    color: #f5f5f5;                       
+    border: 3px solid #c0392b;            
     padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.6); /* Effetto luce da set */
-    font-family: "Courier New", monospace; /* Stile macchina da scrivere */
+    margin: 20px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+    font-family: "Courier New", monospace;
 }
 
 /* Titoli delle voci (Regia:, Genere:, ecc.) */
 #film-details strong {
-    color: #e74c3c;                       /* Rosso cinematografico */
-    text-transform: uppercase;            /* Look tecnico */
+    color: #e74c3c;
+    text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 /* Spaziatura tra le righe */
 #film-details p {
     margin: 8px 0;
-    border-bottom: 1px dashed #444;       /* Linea tecnica da foglio di produzione */
+    border-bottom: 1px dashed #444;
     padding-bottom: 6px;
 }
 
@@ -125,187 +125,77 @@ main {
     width: 100%;
     max-width: 300px;
     border-radius: 10px;
-}
-
-/* Effetto poster sulla copertina */
-#film-details img {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Ombra profonda stile locandina */
-    border: 3px solid #222;                     /* Bordo scuro da poster */
-    transition: transform 0.3s ease, 
-                box-shadow 0.3s ease;           /* Animazione morbida */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    border: 3px solid #222;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 #film-details img:hover {
-    transform: scale(1.03);                     /* Leggero zoom al passaggio */
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55); /* Ombra più intensa */
+    transform: scale(1.03);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
 }
 
 /* ====== VARIANTI COLORE PER GENERE ====== */
+#film-details.animazione { border-color: #fff799; }
+#film-details.animazione strong { color: #fff799; }
 
-/* Animazione – giallo chiaro */
-#film-details.animazione {
-    border-color: #fff799;
-}
-#film-details.animazione strong {
-    color: #fff799;
-}
+#film-details.avventura { border-color: #0b6623; }
+#film-details.avventura strong { color: #0b6623; }
 
-/* Avventura – verde scuro */
-#film-details.avventura {
-    border-color: #0b6623;
-}
-#film-details.avventura strong {
-    color: #0b6623;
-}
+#film-details.azione { border-color: #ff8c00; }
+#film-details.azione strong { color: #ff8c00; }
 
-/* Azione – arancione */
-#film-details.azione {
-    border-color: #ff8c00;
-}
-#film-details.azione strong {
-    color: #ff8c00;
-}
+#film-details.commedia { border-color: #e6c300; }
+#film-details.commedia strong { color: #e6c300; }
 
-/* Commedia – giallo scuro */
-#film-details.commedia {
-    border-color: #e6c300;
-}
-#film-details.commedia strong {
-    color: #e6c300;
-}
-
-/* Concerto – bianco */
-#film-details.concerto {
-    border-color: #ffffff;
-}
-#film-details.concerto strong {
-    color: #ffffff;
-}
-
-/* Corse – bianco */
-#film-details.corse {
-    border-color: #ffffff;
-}
-#film-details.corse strong {
-    color: #ffffff;
-}
-
-/* Corso di lingua – bianco */
-#film-details.corsodilingua {
-    border-color: #ffffff;
-}
-#film-details.corsodilingua strong {
-    color: #ffffff;
-}
-
-/* Documentario – rosa */
-#film-details.documentario {
-    border-color: #ff66cc;
-}
-#film-details.documentario strong {
-    color: #ff66cc;
-}
-
-/* Drammatico – viola */
-#film-details.drammatico {
-    border-color: #800080;
-}
-#film-details.drammatico strong {
-    color: #800080;
-}
-
-/* Erotico – rosso */
-#film-details.erotico {
-    border-color: #ff0000;
-}
-#film-details.erotico strong {
-    color: #ff0000;
-}
-
-/* Eventi – bianco */
+#film-details.concerto,
+#film-details.corse,
+#film-details.corsodilingua,
 #film-details.eventi {
     border-color: #ffffff;
 }
+#film-details.concerto strong,
+#film-details.corse strong,
+#film-details.corsodilingua strong,
 #film-details.eventi strong {
     color: #ffffff;
 }
 
-/* Fantascienza – blu */
-#film-details.fantascienza {
-    border-color: #0047ab;
-}
-#film-details.fantascienza strong {
-    color: #0047ab;
-}
+#film-details.documentario { border-color: #ff66cc; }
+#film-details.documentario strong { color: #ff66cc; }
 
-/* Fantastico – azzurro */
-#film-details.fantastico {
-    border-color: #00aaff;
-}
-#film-details.fantastico strong {
-    color: #00aaff;
-}
+#film-details.drammatico { border-color: #800080; }
+#film-details.drammatico strong { color: #800080; }
 
-/* Fiabe – giallo chiaro */
-#film-details.fiabe {
-    border-color: #fff799;
-}
-#film-details.fiabe strong {
-    color: #fff799;
-}
+#film-details.erotico { border-color: #ff0000; }
+#film-details.erotico strong { color: #ff0000; }
 
-/* Guerra – grigio */
-#film-details.guerra {
-    border-color: #808080;
-}
-#film-details.guerra strong {
-    color: #808080;
-}
+#film-details.fantascienza { border-color: #0047ab; }
+#film-details.fantascienza strong { color: #0047ab; }
 
-/* Horror – rosso (già stile base) */
-#film-details.horror {
-    border-color: #c0392b;
-}
-#film-details.horror strong {
-    color: #e74c3c;
-}
+#film-details.fantastico { border-color: #00aaff; }
+#film-details.fantastico strong { color: #00aaff; }
 
-/* Musical – arancione */
-#film-details.musical {
-    border-color: #ff8c00;
-}
-#film-details.musical strong {
-    color: #ff8c00;
-}
+#film-details.fiabe { border-color: #fff799; }
+#film-details.fiabe strong { color: #fff799; }
 
-/* Ragazzi – verde chiaro */
-#film-details.ragazzi {
-    border-color: #7fff7f;
-}
-#film-details.ragazzi strong {
-    color: #7fff7f;
-}
+#film-details.guerra { border-color: #808080; }
+#film-details.guerra strong { color: #808080; }
 
-/* Sport – arancione chiaro */
-#film-details.sport {
-    border-color: #ffb347;
-}
-#film-details.sport strong {
-    color: #ffb347;
-}
+#film-details.horror { border-color: #c0392b; }
+#film-details.horror strong { color: #e74c3c; }
 
-/* Thriller – rosso chiaro */
-#film-details.thriller {
-    border-color: #ff6666;
-}
-#film-details.thriller strong {
-    color: #ff6666;
-}
+#film-details.musical { border-color: #ff8c00; }
+#film-details.musical strong { color: #ff8c00; }
 
-/* Western – marrone */
-#film-details.western {
-    border-color: #8b4513;
-}
-#film-details.western strong {
-    color: #8b4513;
-}
+#film-details.ragazzi { border-color: #7fff7f; }
+#film-details.ragazzi strong { color: #7fff7f; }
+
+#film-details.sport { border-color: #ffb347; }
+#film-details.sport strong { color: #ffb347; }
+
+#film-details.thriller { border-color: #ff6666; }
+#film-details.thriller strong { color: #ff6666; }
+
+#film-details.western { border-color: #8b4513; }
+#film-details.western strong { color: #8b4513; }
