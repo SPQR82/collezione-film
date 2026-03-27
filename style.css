@@ -351,3 +351,7 @@ main {
     border-right-color: #8b4513;
 }
 
+/* Aumenta il contrasto del testo sotto il titolo */
+#film-list li span {
+    color: #d6d6d6 !important;
+}
