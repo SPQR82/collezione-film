@@ -26,15 +26,6 @@ function evidenzia(testo, query) {
     return testo;
 }
 
-// ⭐ Dizionario sinonimi per ricerca intelligente
-const sinonimi = {
-    "batman": ["il cavaliere oscuro", "dark knight", "bruce wayne"],
-    "il cavaliere oscuro": ["batman", "dark knight"],
-    "dark knight": ["batman", "il cavaliere oscuro"],
-    "joker": ["batman", "il cavaliere oscuro"],
-    "nolan": ["batman", "il cavaliere oscuro", "dark knight"]
-};
-
 fetch(CSV_URL)
     .then(response => response.text())
     .then(data => {
@@ -103,14 +94,6 @@ fetch(CSV_URL)
             const query = normalizza(ricercaAttiva);
             let parole = query.split(" ").filter(p => p.length > 0);
 
-            // ⭐ Estende la ricerca con sinonimi
-            let paroleEstese = [...parole];
-            parole.forEach(p => {
-                if (sinonimi[p]) {
-                    paroleEstese.push(...sinonimi[p]);
-                }
-            });
-
             films
                 .filter(film => {
 
@@ -118,8 +101,10 @@ fetch(CSV_URL)
                     if (filtroAttivo === "bluray" && film.Formato !== "Blu-Ray") return false;
                     if (filtroAttivo === "dvd" && film.Formato !== "DVD") return false;
 
-                    // --- RICERCA INTELLIGENTE ---
-                    const campi = normalizza(
+                    // -------------------------
+                    // 🔥 RICERCA INTELLIGENTE UNIVERSALE
+                    // -------------------------
+                    let campi = normalizza(
                         film.Titolo + " " +
                         film.Regia + " " +
                         film.Genere + " " +
@@ -130,7 +115,20 @@ fetch(CSV_URL)
                         film.Note
                     );
 
-                    return paroleEstese.every(p => campi.includes(p));
+                    // Aggiunge parole del titolo separate
+                    campi += " " + normalizza(film.Titolo).split(" ").join(" ");
+
+                    // Aggiunge titolo senza articoli
+                    campi += " " + normalizza(film.Titolo.replace(/^(il|lo|la|i|gli|le|the)\s+/i, ""));
+
+                    // Aggiunge titolo senza punteggiatura
+                    campi += " " + normalizza(film.Titolo.replace(/[^a-zA-Z0-9 ]/g, ""));
+
+                    // Aggiunge titolo invertito
+                    campi += " " + normalizza(film.Titolo.split(" ").reverse().join(" "));
+
+                    // Controllo finale
+                    return parole.every(p => campi.includes(p));
                 })
                 .forEach(film => {
 
