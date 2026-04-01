@@ -44,17 +44,21 @@ header {
     cursor: pointer;
 }
 
-/* ====== MENU FILTRI (STICKY) ====== */
+/* ====== MENU FILTRI (STICKY + SCURO) ====== */
 #menu {
     display: flex;
     justify-content: center;
     gap: 10px;
-    background: #ddd;
-    padding: 10px;
+    padding: 12px 10px;
+
+    background: rgba(20, 20, 20, 0.75);
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 2000;
 }
 
 #menu button {
@@ -71,223 +75,25 @@ header {
     background: #000;
 }
 
-/* ====== BARRA DI RICERCA (STICKY) ====== */
+/* ====== BARRA DI RICERCA (STICKY + SCURA) ====== */
 #search-box {
     display: flex;
     justify-content: center;
     padding: 15px;
-    background: #eee;
+
+    background: rgba(15, 15, 15, 0.75);
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
     position: sticky;
     top: 60px; /* sotto il menu */
-    z-index: 900;
+    z-index: 1500;
 }
 
 #search-input {
     width: 90%;
     max-width: 400px;
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
-    border: 1px solid #aaa;
-    border-radius: 5px;
-}
 
-/* ====== LISTA FILM ====== */
-main {
-    padding: 20px;
-}
-
-#film-list {
-    padding: 0;
-    margin: 0;
-}
-
-/* ====== CARD STILE PELLICOLA ====== */
-#film-list li {
-    list-style: none;
-    cursor: pointer;
-    margin: 15px 0;
-    padding: 15px 20px;
-    background: rgba(0, 0, 0, 0.45);
-    color: #fff;
-    border-radius: 6px;
-    border-left: 6px solid #444;
-    border-right: 6px solid #444;
-    position: relative;
-    backdrop-filter: blur(2px);
-    transition: transform 0.15s ease, background 0.2s ease;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-/* Hover cinematografico */
-#film-list li:hover {
-    background: rgba(0, 0, 0, 0.65);
-    transform: scale(1.02);
-}
-
-/* Perforazioni stile pellicola */
-#film-list li::before,
-#film-list li::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 6px;
-    height: 65%;
-    background: repeating-linear-gradient(
-        to bottom,
-        #111 0px,
-        #111 4px,
-        transparent 4px,
-        transparent 8px
-    );
-    transform: translateY(-50%);
-    opacity: 0.55;
-}
-
-#film-list li::before { left: -12px; }
-#film-list li::after { right: -12px; }
-
-/* ====== SCHEDA FILM ====== */
-#film-details {
-    display: none;
-}
-
-#film-details {
-    background: #111;
-    color: #f5f5f5;
-    border: 3px solid #c0392b;
-    padding: 25px;
-    border-radius: 8px;
-    margin: 20px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.6);
-    font-family: "Courier New", monospace;
-}
-
-#film-details strong {
-    color: #e74c3c;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-#film-details p {
-    margin: 8px 0;
-    border-bottom: 1px dashed #444;
-    padding-bottom: 6px;
-}
-
-#film-details img {
-    display: block;
-    margin: 20px auto;
-    width: 100%;
-    max-width: 300px;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-    border: 3px solid #222;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-#film-details img:hover {
-    transform: scale(1.03);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
-}
-
-/* ====== VARIANTI COLORE PER GENERE ====== */
-#film-details.animazione { border-color: #fff799; }
-#film-details.animazione strong { color: #fff799; }
-
-#film-details.avventura { border-color: #0b6623; }
-#film-details.avventura strong { color: #0b6623; }
-
-#film-details.azione { border-color: #ff8c00; }
-#film-details.azione strong { color: #ff8c00; }
-
-#film-details.commedia { border-color: #e6c300; }
-#film-details.commedia strong { color: #e6c300; }
-
-#film-details.concerto,
-#film-details.corse,
-#film-details.corsodilingua,
-#film-details.eventi {
-    border-color: #ffffff;
-}
-#film-details.concerto strong,
-#film-details.corse strong,
-#film-details.corsodilingua strong,
-#film-details.eventi strong {
-    color: #ffffff;
-}
-
-#film-details.documentario { border-color: #ff66cc; }
-#film-details.documentario strong { color: #ff66cc; }
-
-#film-details.drammatico { border-color: #800080; }
-#film-details.drammatico strong { color: #800080; }
-
-#film-details.erotico { border-color: #ff0000; }
-#film-details.erotico strong { color: #ff0000; }
-
-#film-details.fantascienza { border-color: #0047ab; }
-#film-details.fantascienza strong { color: #0047ab; }
-
-#film-details.fantastico { border-color: #00aaff; }
-#film-details.fantastico strong { color: #00aaff; }
-
-#film-details.fiabe { border-color: #fff799; }
-#film-details.fiabe strong { color: #fff799; }
-
-#film-details.guerra { border-color: #808080; }
-#film-details.guerra strong { color: #808080; }
-
-#film-details.horror { border-color: #c0392b; }
-#film-details.horror strong { color: #e74c3c; }
-
-#film-details.musical { border-color: #ff8c00; }
-#film-details.musical strong { color: #ff8c00; }
-
-#film-details.ragazzi { border-color: #7fff7f; }
-#film-details.ragazzi strong { color: #7fff7f; }
-
-#film-details.sport { border-color: #ffb347; }
-#film-details.sport strong { color: #ffb347; }
-
-#film-details.thriller { border-color: #ff6666; }
-#film-details.thriller strong { color: #ff6666; }
-
-#film-details.western { border-color: #8b4513; }
-#film-details.western strong { color: #8b4513; }
-
-/* ====== COLORI DELLA STRISCIA LATERALE IN BASE AL GENERE ====== */
-
-#film-list li.animazione { border-left-color: #fff799; border-right-color: #fff799; }
-#film-list li.avventura { border-left-color: #0b6623; border-right-color: #0b6623; }
-#film-list li.azione { border-left-color: #ff8c00; border-right-color: #ff8c00; }
-#film-list li.commedia { border-left-color: #e6c300; border-right-color: #e6c300; }
-#film-list li.concerto,
-#film-list li.corse,
-#film-list li.corsodilingua,
-#film-list li.eventi { border-left-color: #ffffff; border-right-color: #ffffff; }
-#film-list li.documentario { border-left-color: #ff66cc; border-right-color: #ff66cc; }
-#film-list li.drammatico { border-left-color: #800080; border-right-color: #800080; }
-#film-list li.erotico { border-left-color: #ff0000; border-right-color: #ff0000; }
-#film-list li.fantascienza { border-left-color: #0047ab; border-right-color: #0047ab; }
-#film-list li.fantastico { border-left-color: #00aaff; border-right-color: #00aaff; }
-#film-list li.fiabe { border-left-color: #fff799; border-right-color: #fff799; }
-#film-list li.guerra { border-left-color: #808080; border-right-color: #808080; }
-#film-list li.horror { border-left-color: #c0392b; border-right-color: #c0392b; }
-#film-list li.musical { border-left-color: #ff8c00; border-right-color: #ff8c00; }
-#film-list li.ragazzi { border-left-color: #7fff7f; border-right-color: #7fff7f; }
-#film-list li.sport { border-left-color: #ffb347; border-right-color: #ffb347; }
-#film-list li.thriller { border-left-color: #ff6666; border-right-color: #ff6666; }
-#film-list li.western { border-left-color: #8b4513; border-right-color: #8b4513; }
-
-/* Migliora leggibilità del testo sotto il titolo */
-#film-list li span {
-    color: #ccc !important;
-    font-size: 15px;
-    letter-spacing: 0.3px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-}
+    border: 1px solid rgba
