@@ -5,10 +5,10 @@ const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvDWnpCmYlgbTD
 function normalizza(testo) {
     return testo
         .toLowerCase()
-        .normalize("NFD")               
-        .replace(/[\u0300-\u036f]/g, "") 
-        .replace(/['’]/g, "")            
-        .replace(/\s+/g, " ")            
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/['’]/g, "")
+        .replace(/\s+/g, " ")
         .trim();
 }
 
@@ -64,7 +64,6 @@ fetch(CSV_URL)
                          style="width:100%; max-width:300px; border-radius:10px; display:block; margin:20px auto;">
                 `;
 
-                // --- Assegna la classe in base al genere ---
                 let genere = film.Genere;
                 let classeGenere = normalizza(genere).replace(/\s+/g, "");
                 document.getElementById("film-details").classList.add(classeGenere);
@@ -72,6 +71,7 @@ fetch(CSV_URL)
                 document.getElementById("film-details").style.display = "block";
             }
 
+            // TORNA INDIETRO
             document.getElementById("back-btn").addEventListener("click", () => {
                 window.location.href = "index.html";
             });
@@ -85,8 +85,8 @@ fetch(CSV_URL)
         const lista = document.getElementById("film-list");
         const searchInput = document.getElementById("search-input");
 
-        let filtroAttivo = "all";   
-        let ricercaAttiva = "";     
+        let filtroAttivo = "all";
+        let ricercaAttiva = "";
 
         function aggiornaLista() {
             lista.innerHTML = "";
@@ -115,35 +115,42 @@ fetch(CSV_URL)
 
                     return parole.every(p => campi.includes(p));
                 })
-          .forEach(film => {
+                .forEach(film => {
 
-    const li = document.createElement("li");
+                    const li = document.createElement("li");
 
-    // 👉 Aggiungiamo la classe del genere SOLO se esiste
-    if (film.Genere && film.Genere.trim() !== "") {
-        const classeGenere = normalizza(film.Genere).replace(/\s+/g, "");
-        li.classList.add(classeGenere);
-    }
+                    if (film.Genere && film.Genere.trim() !== "") {
+                        const classeGenere = normalizza(film.Genere).replace(/\s+/g, "");
+                        li.classList.add(classeGenere);
+                    }
 
-    // Evidenziazione del titolo
-    const titoloEvidenziato = evidenzia(film.Titolo, ricercaAttiva);
+                    const titoloEvidenziato = evidenzia(film.Titolo, ricercaAttiva);
 
-    li.innerHTML = `
-        <strong>${titoloEvidenziato}</strong><br>
-        <span style="font-size:14px; color:#555;">
-            Formato: ${film.Formato} • Box: ${film.Box}
-        </span>
-    `;
+                    li.innerHTML = `
+                        <strong>${titoloEvidenziato}</strong><br>
+                        <span style="font-size:14px; color:#555;">
+                            Formato: ${film.Formato} • Box: ${film.Box}
+                        </span>
+                    `;
 
-    li.addEventListener("click", () => {
-        window.location.href = `film.html?titolo=${film.Titolo}`;
-    });
+                    // SALVA POSIZIONE SCROLL PRIMA DI APRIRE IL FILM
+                    li.addEventListener("click", () => {
+                        localStorage.setItem("scrollPos", window.scrollY);
+                        window.location.href = `film.html?titolo=${film.Titolo}`;
+                    });
 
-    lista.appendChild(li);
-});
+                    lista.appendChild(li);
+                });
         }
 
         aggiornaLista();
+
+        // RIPRISTINA POSIZIONE SCROLL
+        const savedScroll = localStorage.getItem("scrollPos");
+        if (savedScroll !== null) {
+            window.scrollTo(0, parseInt(savedScroll));
+            localStorage.removeItem("scrollPos");
+        }
 
         // -------------------------
         // FILTRI MENU
