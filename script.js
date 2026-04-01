@@ -26,6 +26,15 @@ function evidenzia(testo, query) {
     return testo;
 }
 
+// ⭐ Dizionario sinonimi per ricerca intelligente
+const sinonimi = {
+    "batman": ["il cavaliere oscuro", "dark knight", "bruce wayne"],
+    "il cavaliere oscuro": ["batman", "dark knight"],
+    "dark knight": ["batman", "il cavaliere oscuro"],
+    "joker": ["batman", "il cavaliere oscuro"],
+    "nolan": ["batman", "il cavaliere oscuro", "dark knight"]
+};
+
 fetch(CSV_URL)
     .then(response => response.text())
     .then(data => {
@@ -92,7 +101,15 @@ fetch(CSV_URL)
             lista.innerHTML = "";
 
             const query = normalizza(ricercaAttiva);
-            const parole = query.split(" ").filter(p => p.length > 0);
+            let parole = query.split(" ").filter(p => p.length > 0);
+
+            // ⭐ Estende la ricerca con sinonimi
+            let paroleEstese = [...parole];
+            parole.forEach(p => {
+                if (sinonimi[p]) {
+                    paroleEstese.push(...sinonimi[p]);
+                }
+            });
 
             films
                 .filter(film => {
@@ -113,7 +130,7 @@ fetch(CSV_URL)
                         film.Note
                     );
 
-                    return parole.every(p => campi.includes(p));
+                    return paroleEstese.every(p => campi.includes(p));
                 })
                 .forEach(film => {
 
