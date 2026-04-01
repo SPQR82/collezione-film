@@ -172,3 +172,19 @@ fetch(CSV_URL)
             });
         }
     });
+// Pulsante "Torna su"
+const backToTop = document.getElementById("back-to-top");
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+        backToTop.style.opacity = "1";
+        backToTop.style.pointerEvents = "auto";
+    } else {
+        backToTop.style.opacity = "0";
+        backToTop.style.pointerEvents = "none";
+    }
+});
+
+backToTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
