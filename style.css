@@ -350,3 +350,13 @@ main {
             0 0 42px rgba(255,255,255,0.5);
     }
 }
+
+/* ====== ICONA FORMATO (DVD / BLU-RAY) ====== */
+.icon-formato {
+    height: 16px;          /* Dimensione perfetta accanto al testo */
+    width: auto;
+    vertical-align: middle;
+    margin-right: 6px;
+    opacity: 0.95;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6)); /* si integra con lo stile cinematografico */
+}
