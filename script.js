@@ -115,19 +115,11 @@ fetch(CSV_URL)
                         film.Note
                     );
 
-                    // Aggiunge parole del titolo separate
                     campi += " " + normalizza(film.Titolo).split(" ").join(" ");
-
-                    // Aggiunge titolo senza articoli
                     campi += " " + normalizza(film.Titolo.replace(/^(il|lo|la|i|gli|le|the)\s+/i, ""));
-
-                    // Aggiunge titolo senza punteggiatura
                     campi += " " + normalizza(film.Titolo.replace(/[^a-zA-Z0-9 ]/g, ""));
-
-                    // Aggiunge titolo invertito
                     campi += " " + normalizza(film.Titolo.split(" ").reverse().join(" "));
 
-                    // Controllo finale
                     return parole.every(p => campi.includes(p));
                 })
                 .forEach(film => {
@@ -141,10 +133,22 @@ fetch(CSV_URL)
 
                     const titoloEvidenziato = evidenzia(film.Titolo, ricercaAttiva);
 
+                    // -------------------------
+                    // ⭐ SOLO ICONA (soluzione B)
+                    // -------------------------
+                    let iconaFormato = "";
+
+                    if (film.Formato === "DVD") {
+                        iconaFormato = `<img src="img/icons/dvd.png" class="icon-formato" alt="DVD">`;
+                    } else if (film.Formato === "Blu-Ray" || film.Formato === "Blu-ray") {
+                        iconaFormato = `<img src="img/icons/bluray.png" class="icon-formato" alt="Blu-ray">`;
+                    }
+
                     li.innerHTML = `
                         <strong>${titoloEvidenziato}</strong><br>
-                        <span style="font-size:14px; color:#555;">
-                            Formato: ${film.Formato} • Box: ${film.Box}
+                        <span style="font-size:14px; color:#555; display:flex; align-items:center; gap:6px;">
+                            ${iconaFormato}
+                            • Box: ${film.Box}
                         </span>
                     `;
 
@@ -193,7 +197,7 @@ fetch(CSV_URL)
         const backToTop = document.getElementById("back-to-top");
 
         window.addEventListener("scroll", () => {
-            if (window.scrollY > 1) {   // compare subito al primo scroll
+            if (window.scrollY > 1) {
                 backToTop.style.opacity = "1";
                 backToTop.style.pointerEvents = "auto";
             } else {
